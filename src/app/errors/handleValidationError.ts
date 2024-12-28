@@ -20,7 +20,7 @@ const handleValidationError = (
 
   return {
     statusCode,
-    message: 'Validation Error',
+    message: 'MongooseValidation Error',
     errorSources,
   };
 };
