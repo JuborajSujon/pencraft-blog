@@ -1,11 +1,11 @@
 import { model, Schema } from 'mongoose';
-import { IUser } from './user.interface';
+import { IUser, UserModel } from './user.interface';
 import bcrypt from 'bcrypt';
 import config from '../../config';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
 
-const userSchema = new Schema<IUser>(
+const userSchema = new Schema<IUser, UserModel>(
   {
     name: {
       type: String,
@@ -76,4 +76,4 @@ userSchema.statics.isPasswordMatched = async function (
   return await bcrypt.compare(plainTextPassword, hashedPassword);
 };
 
-export const User = model<IUser>('User', userSchema);
+export const User = model<IUser, UserModel>('User', userSchema);
