@@ -3,7 +3,9 @@ import { UserModel } from './user.model';
 
 const createUserIntoDB = async (payload: IUser) => {
   const result = await UserModel.create(payload);
-  return result;
+
+  const { _id, name, email } = result;
+  return { _id, name, email };
 };
 
 export const UserService = {
