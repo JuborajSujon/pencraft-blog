@@ -9,6 +9,7 @@ import handleValidationError from '../errors/handleValidationError';
 import handleCastError from '../errors/handleCastError';
 import handleDuplicateError from '../errors/handleDuplicateError';
 import AppError from '../errors/AppError';
+import AuthenticationError from '../errors/AuthenticationError';
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -50,6 +51,15 @@ export const globalErrorHandler: ErrorRequestHandler = (
     statusCode = simplifiedErrors?.statusCode;
     message = simplifiedErrors?.message;
     errorSources = simplifiedErrors?.errorSources;
+  } else if (err instanceof AuthenticationError) {
+    statusCode = err?.statusCode;
+    message = err?.details;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
   } else if (err instanceof AppError) {
     statusCode = err?.statusCode;
     message = err?.message;

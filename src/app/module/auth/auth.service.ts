@@ -9,7 +9,10 @@ const loginUser = async (payload: ILoginUser) => {
   //isexist user
   const user = await User.findOne({ email: payload.email }).select('+password');
 
+  console.log({ user });
+
   if (!user) {
+    console.log('i am in');
     throw new AuthenticationError(
       httpStatus.UNAUTHORIZED,
       'Invalid Credentials',
