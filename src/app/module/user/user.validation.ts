@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-export const createUserZodSchema = z.object({
+export const registerUserValidationSchema = z.object({
   name: z.string({
     required_error: 'Name is required',
   }),
@@ -11,3 +11,7 @@ export const createUserZodSchema = z.object({
   role: z.enum(['user', 'admin']).optional().default('user'),
   isBlocked: z.boolean().optional().default(false),
 });
+
+export const UserValidation = {
+  registerUserValidationSchema,
+};
