@@ -27,4 +27,6 @@ router.delete(
   BlogController.deleteBlog,
 );
 
+router.get('/blogs', BlogController.getAllBlogs);
+
 export const BlogRoutes = router;
