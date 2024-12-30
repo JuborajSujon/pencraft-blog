@@ -3,6 +3,8 @@ import { IBlog } from './blog.interface';
 import { Blog } from './blog.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import QueryBuilder from '../../builder/QueryBuilder';
+import { BlogSearchableFields } from './blog.constant';
 
 const createBlogIntoDB = async (payload: IBlog, user: JwtPayload) => {
   const blog = await Blog.create({
@@ -69,8 +71,16 @@ const deleteBlogIntoDB = async (id: string, user: JwtPayload) => {
   await Blog.findByIdAndDelete(id);
 };
 
-const getAllBlogsFromDB = async () => {
-  const result = await Blog.find({}).populate('author', 'name email role');
+const getAllBlogsFromDB = async (query: Record<string, unknown>) => {
+  const blogQuery = new QueryBuilder(Blog.find(), query)
+    .search(BlogSearchableFields)
+    .filter()
+    .sort()
+    .paginate();
+
+  const result = await blogQuery.modelQuery
+    .populate('author', 'name email role')
+    .select('-isPublished -createdAt -updatedAt');
   return result;
 };
 export const BlogService = {
