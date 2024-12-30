@@ -10,6 +10,7 @@ import { User } from '../module/user/user.model';
 const auth = (...requiredRoles: TUserRole[]) => {
   return catchAsync(async (req: Request, res: Response, next: NextFunction) => {
     const isToken = req.headers.authorization;
+
     if (!isToken) {
       throw new AuthorizationError(
         httpStatus.UNAUTHORIZED,
@@ -36,7 +37,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    const { role, email } = decoded;
+    const { role, userEmail: email } = decoded;
 
     // check if the user exists
     const user = await User.findOne({ email });
@@ -68,7 +69,7 @@ const auth = (...requiredRoles: TUserRole[]) => {
     }
 
     // decoded token
-    req.user = decoded as JwtPayload;
+    req.user = user;
 
     next();
   });
