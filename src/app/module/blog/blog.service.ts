@@ -26,10 +26,14 @@ const updateBlogIntoDB = async (
 ) => {
   const blog = await Blog.findOne({
     _id: id,
-    author: user._id,
   });
 
   if (!blog) {
+    throw new AppError(httpStatus.NOT_FOUND, 'Blog not found with this id');
+  }
+
+  // check user is author of blog or not
+  if (user._id.toString() !== blog.author.toString()) {
     throw new AppError(
       httpStatus.UNAUTHORIZED,
       "You don't have permission to update this blog",
