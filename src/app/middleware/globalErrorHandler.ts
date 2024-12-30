@@ -10,6 +10,7 @@ import handleCastError from '../errors/handleCastError';
 import handleDuplicateError from '../errors/handleDuplicateError';
 import AppError from '../errors/AppError';
 import AuthenticationError from '../errors/AuthenticationError';
+import AuthorizationError from '../errors/AuthorizationError';
 
 export const globalErrorHandler: ErrorRequestHandler = (
   err,
@@ -52,6 +53,15 @@ export const globalErrorHandler: ErrorRequestHandler = (
     message = simplifiedErrors?.message;
     errorSources = simplifiedErrors?.errorSources;
   } else if (err instanceof AuthenticationError) {
+    statusCode = err?.statusCode;
+    message = err?.details;
+    errorSources = [
+      {
+        path: '',
+        message: err?.message,
+      },
+    ];
+  } else if (err instanceof AuthorizationError) {
     statusCode = err?.statusCode;
     message = err?.details;
     errorSources = [
