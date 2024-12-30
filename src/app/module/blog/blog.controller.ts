@@ -17,6 +17,22 @@ const createBlog = catchAsync(async (req, res) => {
   });
 });
 
+const updateBlog = catchAsync(async (req, res) => {
+  const resutl = await BlogService.updateBlogIntoDB(
+    req.params.id,
+    req.body,
+    req.user as JwtPayload,
+  );
+
+  sendResponse(res, {
+    success: true,
+    message: 'Blog updated successfully',
+    statusCode: httpStatus.OK,
+    data: resutl,
+  });
+});
+
 export const BlogController = {
   createBlog,
+  updateBlog,
 };
