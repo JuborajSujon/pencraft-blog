@@ -4,9 +4,9 @@ import { AdminService } from './admin.service';
 import httpStatus from 'http-status';
 
 const userBlock = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  await AdminService.userBlockIntoDB(id);
+  await AdminService.userBlockIntoDB(userId);
 
   sendResponse(res, {
     success: true,
@@ -16,9 +16,9 @@ const userBlock = catchAsync(async (req, res) => {
 });
 
 const deleteBlog = catchAsync(async (req, res) => {
-  const { userId } = req.params;
+  const { id } = req.params;
 
-  await AdminService.deleteBlogIntoDB(userId);
+  await AdminService.deleteBlogIntoDB(id);
 
   sendResponse(res, {
     success: true,
