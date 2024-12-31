@@ -96,6 +96,6 @@ export const globalErrorHandler: ErrorRequestHandler = (
     error: {
       details: errorSources || message,
     },
-    stack: config.node_env === 'development' ? err?.stack : null,
+    stack: config.node_env === 'production' ? err?.stack : null,
   });
 };
