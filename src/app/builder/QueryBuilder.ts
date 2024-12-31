@@ -1,5 +1,4 @@
-import { FilterQuery, Query, Types } from 'mongoose';
-import AppError from '../errors/AppError';
+import { FilterQuery, Query } from 'mongoose';
 
 class QueryBuilder<T> {
   public modelQuery: Query<T[], T>;
