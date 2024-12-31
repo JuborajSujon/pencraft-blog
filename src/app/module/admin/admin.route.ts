@@ -6,7 +6,7 @@ import { AdminController } from './admin.controller';
 const router = Router();
 
 router.patch(
-  '/users/:id/block',
+  '/users/:userId/block',
   auth(USER_ROLE.admin),
   AdminController.userBlock,
 );

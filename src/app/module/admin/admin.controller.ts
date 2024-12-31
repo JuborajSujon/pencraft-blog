@@ -16,9 +16,9 @@ const userBlock = catchAsync(async (req, res) => {
 });
 
 const deleteBlog = catchAsync(async (req, res) => {
-  const { id } = req.params;
+  const { userId } = req.params;
 
-  await AdminService.deleteBlogIntoDB(id);
+  await AdminService.deleteBlogIntoDB(userId);
 
   sendResponse(res, {
     success: true,
